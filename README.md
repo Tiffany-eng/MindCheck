@@ -4,6 +4,14 @@ MindCheck is a web app for **student mental wellbeing**. It offers private self-
 
 This README explains **how to set up the project from scratch**. Follow **every step below in order** to get the app running on your machine.
 
+### Supabase credentials and `.env`
+
+- The app **requires Supabase credentials** (`VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`) to run. Without them, the app will show a blank page or error in the browser console.
+- Those values are stored in a file named **`.env`** in the **project root** (same folder as `package.json`).
+- **`.env` is not committed to Git** and is **not published** on GitHub—it is listed in `.gitignore` so secrets stay off the public repo.
+- **For grading and submission**, the actual credential values are shared separately in the **Google Doc** that accompanies this project. Open that doc, find the Supabase URL and anon (publishable) key, and put them into your local `.env` as described in **Step 4** below.
+- The repo includes **`.env.example`** only as a **template** (variable names, no real secrets). Copy it to `.env` and fill in the values from the Google Doc—or from your own Supabase project if you are not using the class credentials.
+
 ---
 
 ## Run the project locally (complete setup)
@@ -48,21 +56,11 @@ npm install
 
 Wait until it finishes with no errors. This downloads everything listed in `package-lock.json` into `node_modules/`.
 
-### Step 4 — Create a Supabase project (required for login and data)
+### Step 4 — Create your `.env` file and add Supabase credentials
 
-The app expects Supabase credentials. Without them, the app may not connect correctly.
+You need a file named **`.env`** in the project root. It is **created by you locally** and is never part of the GitHub repository.
 
-1. Open **[supabase.com](https://supabase.com)** and sign in (or create an account).
-2. Click **New project**, pick an organization, set a **name**, **database password**, and **region**, then create the project.
-3. Wait until the project finishes provisioning.
-4. In the Supabase dashboard, open **Project Settings** (gear icon) → **API**.
-5. Keep this page open—you need two values in the next step:
-   - **Project URL** (sometimes labeled “URL”)
-   - **`anon` `public`** key (the public client key—safe to use in the browser)
-
-### Step 5 — Configure environment variables
-
-1. In the project root, **copy the example env file** to a real `.env` file:
+1. **Create `.env` from the template** (run this in the project root—the folder that contains `package.json`):
 
    **macOS / Linux:**
 
@@ -82,19 +80,26 @@ The app expects Supabase credentials. Without them, the app may not connect corr
    Copy-Item .env.example .env
    ```
 
-2. Open **`.env`** in a text editor.
+   That creates a new file **`.env`** next to `.env.example`.
 
-3. Set **exactly** these variables (no quotes needed unless your editor adds them):
+2. **Open `.env`** in any text editor (VS Code, Notepad, etc.).
 
-   | Variable | What to paste |
-   |----------|----------------|
-   | `VITE_SUPABASE_URL` | The **Project URL** from Supabase **Settings → API** |
-   | `VITE_SUPABASE_PUBLISHABLE_KEY` | The **`anon` `public`** key from the same page |
+3. **Fill in the two variables** using the values from the **Google Doc for this submission** (shared with your instructor and class):
 
-4. Save the file.  
-   **Do not commit `.env`**—it is already listed in `.gitignore`.
+   | Variable | Where the value comes from |
+   |----------|----------------------------|
+   | `VITE_SUPABASE_URL` | Paste the **Supabase Project URL** from the Google Doc |
+   | `VITE_SUPABASE_PUBLISHABLE_KEY` | Paste the **anon / publishable public key** from the Google Doc |
 
-### Step 6 — Start the development server
+   Remove any placeholder text so each line looks like `VITE_SUPABASE_URL=https://....supabase.co` with no extra spaces around `=`.
+
+4. **Save** the file.
+
+5. **Do not commit `.env`** to Git—it should stay only on your computer. It is already ignored by `.gitignore`.
+
+**Optional — use your own Supabase project instead:** If you are not using the class Google Doc, create a project at **[supabase.com](https://supabase.com)**, then in **Project Settings → API** copy the **Project URL** and the **`anon` `public`** key into the same two variables in `.env`.
+
+### Step 5 — Start the development server
 
 From the project root, run:
 
@@ -104,14 +109,14 @@ npm run dev
 
 You should see terminal output that includes a **local URL** (by default the app uses port **8080**).
 
-### Step 7 — Open the app in your browser
+### Step 6 — Open the app in your browser
 
 1. Open a browser and go to: **[http://localhost:8080](http://localhost:8080)**  
    If your terminal printed a different URL (for example another port), use **that** URL instead.
 
-2. You should see the MindCheck UI. Sign-up and features that use the database require your Supabase project to be set up and the env vars to be correct.
+2. You should see the MindCheck UI. Sign-up and features that use the database require the Supabase credentials in `.env` to match a working project (the one from the Google Doc, or your own).
 
-### Step 8 — Stop the server (when you are done)
+### Step 7 — Stop the server (when you are done)
 
 In the terminal where `npm run dev` is running, press **Ctrl+C** to stop the dev server.
 
